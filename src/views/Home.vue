@@ -1,0 +1,59 @@
+<template>
+  <div>
+    <ul>
+      <div v-for="asset in assets" :key="asset.id">
+        <div>
+          <h5>bought</h5>
+          {{ asset.bought_asset.name }}
+          {{
+            insertDecimal(
+              asset.bought_asset_amount,
+              asset.bought_asset.decimals
+            )
+          }}
+          {{ asset.bought_asset_amount }}
+          <div>
+          {{ asset.bought_asset.decimals }}
+          </div>
+        </div>
+        <div>
+          <h5>sold</h5>
+          {{ asset.sold_asset.name }}
+          {{
+            insertDecimal(asset.sold_asset_amount, asset.sold_asset.decimals)
+          }}
+          {{ asset.sold_asset_amount }}
+          <div>
+          {{ asset.sold_asset.decimals }}
+          </div>
+        </div>
+      </div>
+    </ul>
+  </div>
+</template>
+<script>
+import TinyService from '@/services'
+
+export default {
+  name: 'Home',
+  data() {
+    return {
+      assets: null
+    }
+  },
+  created() {
+    this.getAssets()
+  },
+  methods: {
+    insertDecimal(num, dec) {
+      return (num / 100).toFixed(dec)
+    },
+    getAssets() {
+      TinyService.getAssets().then(res => {
+        this.assets = res.assets.results
+        console.log(res.assets.results)
+      })
+    }
+  }
+}
+</script>
