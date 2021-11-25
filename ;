@@ -49,9 +49,7 @@ export default {
       return [...(n + '')].map(Number)
     },
     insertDecimal(num, dec) {
-      //return number.toPrecision(dec + 1)
-      console.log(num)
-      return `${num.slice(0, dec > 1 ? dec * -1 : 0)}${'.'}${num.slice(dec > 1 ? dec * -1 : 0)}`
+      return splitToDigit(num).slice(0, dec)
     },
     getAssets() {
       TinyService.getAssets().then(res => {
